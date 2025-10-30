@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>永劫无间征神魂玉词条数值库</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+    .section { margin-bottom: 30px; }
+    .section-title { font-size: 24px; margin-bottom: 15px; color: #333; border-left: 4px solid #1890ff; padding-left: 10px; }
+    .card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+    .card { background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: all 0.3s; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .card-title { font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .card-value { color: #666; font-size: 14px; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-bottom: 8px; }
+    .tag-battle { background-color: #faad14; color: #fff; }
+    .tag-rare { background-color: #ff4d4f; color: #fff; }
+    .tag-effect { background-color: #722ed1; color: #fff; }
+    input[type="checkbox"] { transform: scale(1.2); margin-left: 5px; }
+
+    .mode-switch { margin-bottom: 20px; display: flex; gap: 10px; }
+    .mode-btn { padding: 8px 16px; background-color: #1890ff; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color .3s; }
+    .mode-btn:hover { background-color: #40a9ff; }
+    .mode-btn.active { background-color: #096dd9; }
+
+    .calculator { margin-top: 10px; }
+    .current-value { width: 80px; padding: 5px; margin-right: 5px; border: 1px solid #ccc; border-radius: 4px; }
+    .calculate-btn { padding: 5px 10px; background-color: #1890ff; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    .calculate-btn:hover { background-color: #40a9ff; }
+    .result { margin-top: 5px; font-size: 14px; color: #666; }
+
+    /* 默认显示单词条模式，隐藏多词条模式 */
+    .single-mode { display: block; }
+    .multi-mode { display: none; }
+  </style>
+</head>
+<body>
+  <!-- 模式切换按钮 -->
+  <div class="mode-switch">
+    <button id="singleModeBtn" class="mode-btn active">单词条模式</button>
+    <button id="multiModeBtn" class="mode-btn">多词条模式</button>
+  </div>
+
+  <!-- 单词条模式 -->
+  <div class="single-mode">
+    <!-- 战斗词条 -->
+    <div class="section">
+      <h2 class="section-title">战斗词条</h2>
+      <div class="card-container">
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">攻击 <input type="checkbox"></div><div class="card-value">最大值：4%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">体力 <input type="checkbox"></div><div class="card-value">最大值：15%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">护甲 <input type="checkbox"></div><div class="card-value">最大值：200</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">近抗 <input type="checkbox"></div><div class="card-value">最大值：4%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">远抗 <input type="checkbox"></div><div class="card-value">最大值：10%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">对首领伤害增加 <input type="checkbox"></div><div class="card-value">最大值：5%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">对非首领伤害 <input type="checkbox"></div><div class="card-value">最大值：5%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">蓄力攻击伤害 <input type="checkbox"></div><div class="card-value">最大值：4%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">非蓄力攻击伤害 <input type="checkbox"></div><div class="card-value">最大值：4%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">近战招式增伤 <input type="checkbox"></div><div class="card-value">最大值：5%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">远程招式增伤 <input type="checkbox"></div><div class="card-value">最大值：5%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">天雷伤害 <input type="checkbox"></div><div class="card-value">最大值：30%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">冰爆伤害 <input type="checkbox"></div><div class="card-value">最大值：30%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">毒爆伤害 <input type="checkbox"></div><div class="card-value">最大值：30%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">罡气伤害 <input type="checkbox"></div><div class="card-value">最大值：4%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">蓄力罡气伤害 <input type="checkbox"></div><div class="card-value">最大值：8%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">非蓄力罡气伤害 <input type="checkbox"></div><div class="card-value">最大值：8%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">受到首领伤害减免 <input type="checkbox"></div><div class="card-value">最大值：5%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">受到非首领伤害减免 <input type="checkbox"></div><div class="card-value">最大值：5%</div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">神射积累效率 <input type="checkbox"></div><div class="card-value">最大值：10%</div></div>
+      </div>
+    </div>
+
+    <!-- 效果词条 -->
+    <div class="section">
+      <h2 class="section-title">效果词条</h2>
+      <div class="card-container">
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">每秒怒气回复 <input type="checkbox"></div><div class="card-value">最大值：40%</div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">伤害怒气转换 <input type="checkbox"></div><div class="card-value">最大值：7%</div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">振刀触发恢复 <input type="checkbox"></div><div class="card-value">最大值：200</div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">四象招式触发恢复 <input type="checkbox"></div><div class="card-value">最大值：200</div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">技能冷却速度 <input type="checkbox"></div><div class="card-value">最大值：6%</div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">使用武备匣不消耗道具概率 <input type="checkbox"></div><div class="card-value">最大值：12%</div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">幸运值 <input type="checkbox"></div><div class="card-value">最大值：500</div></div>
+      </div>
+    </div>
+
+    <!-- 稀有词条 -->
+    <div class="section">
+      <h2 class="section-title">稀有词条</h2>
+      <div class="card-container">
+        <div class="card"><span class="tag tag-rare">稀有词条</span><div class="card-title">合道</div><div class="card-value">最大值：50%</div><div class="card-description">此魂玉上的副属性额外增加50%</div></div>
+        <div class="card"><span class="tag tag-rare">稀有词条</span><div class="card-title">化气</div><div class="card-value">最大值：25%</div><div class="card-description">触发元素后可以减少技能冷却+25%</div></div>
+        <div class="card"><span class="tag tag-rare">稀有词条</span><div class="card-title">火正</div><div class="card-value">最大值：+3</div><div class="card-description">振刀后攻击附带3级灼烧</div></div>
+      </div>
+    </div>
+
+    <!-- 单词条模式计算器 -->
+    <div class="section" style="text-align:center;">
+      <h2 class="section-title">计算器</h2>
+      <div class="calculator-container" style="display:inline-block;background:#fff;padding:15px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1);margin-top:20px;">
+        <div class="calculator-input">
+          <input type="number" class="current-value" placeholder="输入当前值" style="width:100px;padding:5px;margin-right:10px;border:1px solid #ccc;border-radius:4px;" />
+          <button class="calculate-btn" id="singleCalcBtn" style="padding:5px 15px;background-color:#1890ff;color:#fff;border:none;border-radius:4px;cursor:pointer;">计算</button>
+        </div>
+        <div class="result" id="singleCalcResult" style="margin-top:10px;font-size:14px;color:#666;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 多词条模式 -->
+  <div class="multi-mode">
+    <!-- 战斗词条 -->
+    <div class="section">
+      <h2 class="section-title">战斗词条</h2>
+      <div class="card-container">
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">攻击</div><div class="card-value">最大值：4%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">体力</div><div class="card-value">最大值：15%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">护甲</div><div class="card-value">最大值：200</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">近抗</div><div class="card-value">最大值：4%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">远抗</div><div class="card-value">最大值：10%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">对首领伤害增加</div><div class="card-value">最大值：5%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">对非首领伤害</div><div class="card-value">最大值：5%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">蓄力攻击伤害</div><div class="card-value">最大值：4%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">非蓄力攻击伤害</div><div class="card-value">最大值：4%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">近战招式增伤</div><div class="card-value">最大值：5%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">远程招式增伤</div><div class="card-value">最大值：5%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">天雷伤害</div><div class="card-value">最大值：30%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">冰爆伤害</div><div class="card-value">最大值：30%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">毒爆伤害</div><div class="card-value">最大值：30%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">罡气伤害</div><div class="card-value">最大值：4%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">蓄力罡气伤害</div><div class="card-value">最大值：8%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">非蓄力罡气伤害</div><div class="card-value">最大值：8%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">受到首领伤害减免</div><div class="card-value">最大值：5%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">受到非首领伤害减免</div><div class="card-value">最大值：5%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-battle">战斗词条</span><div class="card-title">神射积累效率</div><div class="card-value">最大值：10%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+      </div>
+    </div>
+
+    <!-- 效果词条 -->
+    <div class="section">
+      <h2 class="section-title">效果词条</h2>
+      <div class="card-container">
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">每秒怒气回复</div><div class="card-value">最大值：40%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">伤害怒气转换</div><div class="card-value">最大值：7%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">振刀触发恢复</div><div class="card-value">最大值：200</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">四象招式触发恢复</div><div class="card-value">最大值：200</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">技能冷却速度</div><div class="card-value">最大值：6%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">使用武备匣不消耗道具概率</div><div class="card-value">最大值：12%</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+        <div class="card"><span class="tag tag-effect">效果词条</span><div class="card-title">幸运值</div><div class="card-value">最大值：500</div><div class="calculator"><input type="number" class="current-value" placeholder="输入当前值"><button class="calculate-btn">计算</button><div class="result"></div></div></div>
+      </div>
+    </div>
+
+    <!-- 稀有词条 -->
+    <div class="section">
+      <h2 class="section-title">稀有词条</h2>
+      <div class="card-container">
+        <div class="card"><span class="tag tag-rare">稀有词条</span><div class="card-title">合道</div><div class="card-value">最大值：50%</div><div class="card-description">此魂玉上的副属性额外增加50%</div></div>
+        <div class="card"><span class="tag tag-rare">稀有词条</span><div class="card-title">化气</div><div class="card-value">最大值：25%</div><div class="card-description">触发元素后可以减少技能冷却+25%</div></div>
+        <div class="card"><span class="tag tag-rare">稀有词条</span><div class="card-title">火正</div><div class="card-value">最大值：+3</div><div class="card-description">振刀后攻击附带3级灼烧</div></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 单多词条模式切换逻辑
+    const singleModeBtn = document.getElementById('singleModeBtn');
+    const multiModeBtn = document.getElementById('multiModeBtn');
+    const singleModeWrap = document.querySelector('.single-mode');
+    const multiModeWrap = document.querySelector('.multi-mode');
+
+    singleModeBtn.addEventListener('click', () => {
+      singleModeWrap.style.display = 'block';
+      multiModeWrap.style.display = 'none';
+      singleModeBtn.classList.add('active');
+      multiModeBtn.classList.remove('active');
+    });
+
+    multiModeBtn.addEventListener('click', () => {
+      singleModeWrap.style.display = 'none';
+      multiModeWrap.style.display = 'block';
+      singleModeBtn.classList.remove('active');
+      multiModeBtn.classList.add('active');
+    });
+
+    // 单词条模式：计算器
+    let currentMaxValue = 0;
+    const singleCalcBtn = document.getElementById('singleCalcBtn');
+    const singleCalcResult = document.getElementById('singleCalcResult');
+
+    document.querySelectorAll('.single-mode input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', function() {
+        if (this.checked) {
+          // 只允许单选
+          document.querySelectorAll('.single-mode input[type="checkbox"]').forEach(other => {
+            if (other !== this) other.checked = false;
+          });
+          const card = this.closest('.card');
+          const maxValueText = card.querySelector('.card-value').textContent;
+          const numberMatch = maxValueText.match(/\d+(\.\d+)?/);
+          currentMaxValue = numberMatch ? parseFloat(numberMatch[0]) : 0;
+        }
+      });
+    });
+
+    singleCalcBtn.addEventListener('click', () => {
+      const inputEl = document.querySelector('.single-mode .current-value');
+      const value = parseFloat(inputEl.value);
+      if (!currentMaxValue || isNaN(value)) {
+        singleCalcResult.textContent = '请先在上方选择一个词条并输入有效数值';
+        return;
+      }
+      if (value > 0 && value < currentMaxValue) {
+        const ratio = (value / currentMaxValue).toFixed(2);
+        singleCalcResult.textContent = `计算结果: ${ratio}`;
+      } else if (value === currentMaxValue) {
+        singleCalcResult.textContent = '计算结果: 已经是最大值';
+      } else {
+        singleCalcResult.textContent = '该数值并不正确';
+      }
+    });
+
+    // 多词条模式：计算器
+    document.querySelectorAll('.multi-mode .calculate-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const card = this.closest('.card');
+        const currentValue = parseFloat(card.querySelector('.current-value').value);
+        const maxValueText = card.querySelector('.card-value').textContent;
+        const numberMatch = maxValueText.match(/\d+(\.\d+)?/);
+        const maxValue = numberMatch ? parseFloat(numberMatch[0]) : NaN;
+        const resultEl = card.querySelector('.result');
+        if (!isNaN(currentValue) && !isNaN(maxValue)) {
+          if (currentValue > 0 && currentValue < maxValue) {
+            const ratio = (currentValue / maxValue).toFixed(2);
+            resultEl.textContent = `计算结果: ${ratio}`;
+          } else if (currentValue === maxValue) {
+            resultEl.textContent = '计算结果: 已经是最大值';
+          } else {
+            resultEl.textContent = '该数值并不正确';
+          }
+        } else {
+          resultEl.textContent = '请输入有效的数值';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
